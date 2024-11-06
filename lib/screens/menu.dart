@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mental_health_tracker/widgets/left_drawer.dart';
+import 'package:mental_health_tracker/screens/moodentry_form.dart';
+import 'package:mental_health_tracker/widgets/mood_card.dart';
+
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
@@ -28,7 +32,10 @@ class MyHomePage extends StatelessWidget {
         ),
         // The background color of the AppBar is obtained from the application theme color scheme.
         backgroundColor: Theme.of(context).colorScheme.primary,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
+      // Add drawer as a parameter value for the drawer attribute of the Scaffold widget
+      drawer: const LeftDrawer(),
       // Body of the page with paddings around it.
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -148,15 +155,23 @@ class ItemCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
 
       child: InkWell(
-        // Action when the card is pressed.
+        // Touch-responsive area
         onTap: () {
-          // Display the SnackBar message when the card is pressed.
+          // Show SnackBar when clicked
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
-            ..showSnackBar(
-                SnackBar(content: Text("You have pressed the ${item.name} button!"))
+            ..showSnackBar(SnackBar(
+                content: Text("You pressed the ${item.name} button!")));
+
+          // Navigate to the appropriate route (depending on the button type)
+          if (item.name == "Add Mood") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MoodEntryFormPage()),
             );
+          }
         },
+
         // Container to store the Icon and Text
         child: Container(
           padding: const EdgeInsets.all(8),
